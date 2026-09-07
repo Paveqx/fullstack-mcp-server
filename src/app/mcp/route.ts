@@ -1,3 +1,4 @@
+import type { McpServer } from "@modelcontextprotocol/server";
 import { createMcpHandler } from "mcp-handler";
 import { z } from "zod";
 
@@ -39,16 +40,16 @@ async function runTool(
   }
 }
 
-const handler = createMcpHandler((server) => {
-  server.registerTool("list_Todos", 
-  {
-    title: "Pobierz wszystkie todo",
-    description: "Zwaraca Tablicę elementów Todo.",
-    inputSchema: z.object({}),
-  },
-  () => {
-    runTool(async () => result(await listTodos()))
-  })  // TODO
+const handler = createMcpHandler((server: McpServer) => {
+  server.registerTool(
+    "list_Todos",
+    {
+      title: "Pobierz wszystkie todo",
+      description: "Zwaraca Tablicę elementów Todo.",
+      inputSchema: z.object({}),
+    },
+    async () => runTool(async () => result(await listTodos())),
+  ); // TODO
 });
 
 export { handler as GET, handler as POST };
