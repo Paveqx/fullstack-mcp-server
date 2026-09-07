@@ -40,7 +40,15 @@ async function runTool(
 }
 
 const handler = createMcpHandler((server) => {
-  // TODO
+  server.registerTool("list_Todos", 
+  {
+    title: "Pobierz wszystkie todo",
+    description: "Zwaraca Tablicę elementów Todo.",
+    inputSchema: z.object({}),
+  },
+  () => {
+    runTool(async () => result(await listTodos()))
+  })  // TODO
 });
 
 export { handler as GET, handler as POST };
